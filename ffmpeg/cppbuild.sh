@@ -167,7 +167,7 @@ case $PLATFORM in
         make install_dev
         cd ../srt-$LIBSRT_VERSION
         patch -Np1 < ../../../srt-android.patch || true
-        $CMAKE --verbose -DCMAKE_TOOLCHAIN_FILE=android-arm.cmake -DCMAKE_INSTALL_PREFIX=$INSTALL_PATH $SRT_CONFIG .
+        CFLAGS="$ANDROID_FLAGS" CXXFLAGS="$ANDROID_FLAGS" LDFLAGS="$ANDROID_FLAGS" $CMAKE --verbose -DCMAKE_TOOLCHAIN_FILE=android-arm.cmake -DCMAKE_INSTALL_PREFIX=$INSTALL_PATH $SRT_CONFIG .
         make -j $MAKEJ V=0
         make install
         cd ../openh264-$OPENH264_VERSION
@@ -296,7 +296,7 @@ EOF
         cd ../srt-$LIBSRT_VERSION
         patch -Np1 < ../../../srt-android.patch || true
         $CMAKE --verbose -DCMAKE_TOOLCHAIN_FILE=android-arm64.cmake -DCMAKE_INSTALL_PREFIX=$INSTALL_PATH $SRT_CONFIG .
-        CFLAGS="$ANDROID_FLAGS" LDFLAGS="$ANDROID_FLAGS" make -j $MAKEJ V=0
+        CFLAGS="$ANDROID_FLAGS" CXXFLAGS="$ANDROID_FLAGS" LDFLAGS="$ANDROID_FLAGS" make -j $MAKEJ V=0
         make install
         cd ../openh264-$OPENH264_VERSION
         sedinplace 's/stlport_shared/system/g' codec/build/android/dec/jni/Application.mk build/platform-android.mk
@@ -423,7 +423,7 @@ EOF
         cd ../srt-$LIBSRT_VERSION
         patch -Np1 < ../../../srt-android.patch || true
         $CMAKE -DCMAKE_TOOLCHAIN_FILE=android-x86.cmake -DCMAKE_INSTALL_PREFIX=$INSTALL_PATH $SRT_CONFIG .
-        CFLAGS="$ANDROID_FLAGS" LDFLAGS="$ANDROID_FLAGS" make -j $MAKEJ V=0
+        CXXFLAGS="$ANDROID_FLAGS" LDFLAGS="$ANDROID_FLAGS" make -j $MAKEJ V=0
         make install
         cd ../openh264-$OPENH264_VERSION
         sedinplace 's/stlport_shared/system/g' codec/build/android/dec/jni/Application.mk build/platform-android.mk
@@ -547,7 +547,7 @@ EOF
         cd ../srt-$LIBSRT_VERSION
         patch -Np1 < ../../../srt-android.patch || true
         $CMAKE -DCMAKE_TOOLCHAIN_FILE=android-x86_64.cmake -DCMAKE_INSTALL_PREFIX=$INSTALL_PATH $SRT_CONFIG .
-        CFLAGS="$ANDROID_FLAGS" LDFLAGS="$ANDROID_FLAGS" make -j $MAKEJ V=0
+        CFLAGS="$ANDROID_FLAGS" CXXFLAGS="$ANDROID_FLAGS" LDFLAGS="$ANDROID_FLAGS" make -j $MAKEJ V=0
         make install
         cd ../openh264-$OPENH264_VERSION
         sedinplace 's/stlport_shared/system/g' codec/build/android/dec/jni/Application.mk build/platform-android.mk

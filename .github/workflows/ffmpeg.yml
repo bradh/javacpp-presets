@@ -83,6 +83,9 @@ jobs:
         ext: ["", -gpl]
     steps:
       - uses: bytedeco/javacpp-presets/.github/actions/deploy-centos@actions
+      - name: On failure
+        if: ${{ failure() }}
+        run: ls; cat ffmpeg/cppbuild/*/ffmpeg-4.4/ffbuild/config.log
   linux-x86_64:
     runs-on: ubuntu-16.04
     container: centos:6
@@ -93,7 +96,7 @@ jobs:
       - uses: bytedeco/javacpp-presets/.github/actions/deploy-centos@actions
       - name: On failure
         if: ${{ failure() }}
-        run: ls; cat ffmpeg/cppbuild/*/ffbuild/config.log
+        run: ls; cat ffmpeg/cppbuild/*/ffmpeg-4.4/ffbuild/config.log
   macosx-x86_64:
     runs-on: macos-10.15
     strategy:
