@@ -782,8 +782,8 @@ EOF
         make -s -j $MAKEJ
         make install_sw
         cd ../srt-$LIBSRT_VERSION
-        $CMAKE -DCMAKE_INSTALL_PREFIX=$INSTALL_PATH $SRT_CONFIG .
-        make -j $MAKEJ V=0
+        CFLAGS="-m64 -I../include" CXXFLAGS="-m64 -I../include" LDFLAGS="-L../lib/" $CMAKE -DCMAKE_INSTALL_PREFIX=$INSTALL_PATH $SRT_CONFIG .
+        CFLAGS="-m64 -I../include" CXXFLAGS="-m64 -I../include" LDFLAGS="-L../lib/" make -j $MAKEJ V=0
         make install
         cd ../openh264-$OPENH264_VERSION
         make -j $MAKEJ DESTDIR=./ PREFIX=.. AR=ar ARCH=x86_64 USE_ASM=No install-static
