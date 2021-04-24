@@ -26,7 +26,7 @@ jobs:
       - uses: bytedeco/javacpp-presets/.github/actions/deploy-centos@actions
       - name: On failure
         if: ${{ failure() }}
-        run: ls; ls -l ffmpeg/cppbuild/*/lib/; cat ffmpeg/cppbuild/*/ffmpeg-4.4/ffbuild/config.log
+        run: ls; ls -l ffmpeg/cppbuild/*/lib/; ls -l ffmpeg/cppbuild/*/include/; ls -l ffmpeg/cppbuild/*/include/ssl/; cat ffmpeg/cppbuild/*/ffmpeg-4.4/ffbuild/config.log
   android-arm64:
     runs-on: ubuntu-16.04
     container: centos:7
