@@ -547,7 +547,7 @@ EOF
         cd ../srt-$LIBSRT_VERSION
         patch -Np1 < ../../../srt-android.patch || true
         $CMAKE -DCMAKE_TOOLCHAIN_FILE=android-x86_64.cmake -DCMAKE_INSTALL_PREFIX=$INSTALL_PATH $SRT_CONFIG .
-        CFLAGS="$ANDROID_FLAGS" CXXFLAGS="$ANDROID_FLAGS" LDFLAGS="$ANDROID_FLAGS" make -j $MAKEJ V=0
+        CFLAGS="-I../include/ $ANDROID_FLAGS" CXXFLAGS="-I../include/ $ANDROID_FLAGS" LDFLAGS="$ANDROID_FLAGS" make -j $MAKEJ V=0
         make install
         cd ../openh264-$OPENH264_VERSION
         sedinplace 's/stlport_shared/system/g' codec/build/android/dec/jni/Application.mk build/platform-android.mk
@@ -661,7 +661,7 @@ EOF
         make -s -j $MAKEJ
         make install_sw
         cd ../srt-$LIBSRT_VERSION
-        $CMAKE -DCMAKE_INSTALL_PREFIX=$INSTALL_PATH $SRT_CONFIG .
+        CC="gcc -m32" CXX="g++ -m32" $CMAKE -DCMAKE_INSTALL_PREFIX=$INSTALL_PATH $SRT_CONFIG .
         make -j $MAKEJ V=0
         make install
         cd ../openh264-$OPENH264_VERSION
