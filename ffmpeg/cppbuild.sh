@@ -782,7 +782,7 @@ EOF
         make -s -j $MAKEJ
         make install_sw
         cd ../srt-$LIBSRT_VERSION
-        LDFLAGS="-L../lib/" $CMAKE -DCMAKE_INSTALL_PREFIX=$INSTALL_PATH $SRT_CONFIG -DCMAKE_CXX_FLAGS="$CXXFLAGS" -DCMAKE_C_FLAGS="$CFLAGS" CMAKE_LDFLAGS="-L../lib" .
+        LDFLAGS="-L../lib/" $CMAKE -DCMAKE_INSTALL_PREFIX=$INSTALL_PATH $SRT_CONFIG -DCMAKE_C_FLAGS="$CFLAGS" CMAKE_LDFLAGS="-L../lib" .
         LDFLAGS="-L../lib/" make -j $MAKEJ V=0
         make install
         cd ../openh264-$OPENH264_VERSION
@@ -1079,7 +1079,7 @@ EOF
         make -s -j $MAKEJ
         make install_sw
         cd ../srt-$LIBSRT_VERSION
-        CFLAGS="-I../include" CXXFLAGS="-I../include" LDFLAGS="-L../lib/" $CMAKE -DCMAKE_INSTALL_PREFIX=$INSTALL_PATH $SRT_CONFIG .
+        $CMAKE -DCMAKE_INSTALL_PREFIX=$INSTALL_PATH $SRT_CONFIG -DCMAKE_SYSTEM_NAME=Linux -DCMAKE_SYSTEM_VERSION=1 -DCMAKE_SYSTEM_PROCESSOR=armv8 -DCMAKE_CXX_FLAGS="$CXXFLAGS" -DCMAKE_C_FLAGS="$CFLAGS" -DCMAKE_C_COMPILER=aarch64-linux-gnu-gcc -DCMAKE_CXX_COMPILER=aarch64-linux-gnu-g++ .
         CFLAGS="-I../include" CXXFLAGS="-I../include" LDFLAGS="-L../lib/" make -j $MAKEJ V=0
         make install
         cd ../openh264-$OPENH264_VERSION
