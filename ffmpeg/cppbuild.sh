@@ -661,7 +661,7 @@ EOF
         make -s -j $MAKEJ
         make install_sw
         cd ../srt-$LIBSRT_VERSION
-        CC="gcc -m32" CXX="g++ -m32" $CMAKE -DCMAKE_INSTALL_PREFIX=$INSTALL_PATH $SRT_CONFIG .
+        CC="gcc -m32 -I../include -L../lib" CXX="g++ -m32 -I../include -L../lib" $CMAKE -DCMAKE_INSTALL_PREFIX=$INSTALL_PATH $SRT_CONFIG -DENABLE_ENCRYPTION:BOOL=ON .
         make -j $MAKEJ V=0
         make install
         cd ../openh264-$OPENH264_VERSION
@@ -1078,6 +1078,10 @@ EOF
         ./Configure linux-aarch64 -fPIC --prefix=$INSTALL_PATH --cross-compile-prefix=aarch64-linux-gnu- "$CFLAGS" no-shared
         make -s -j $MAKEJ
         make install_sw
+        cd ../srt-$LIBSRT_VERSION
+        CFLAGS="-m64 -I../include" CXXFLAGS="-m64 -I../include" LDFLAGS="-L../lib/" $CMAKE -DCMAKE_INSTALL_PREFIX=$INSTALL_PATH $SRT_CONFIG .
+        CFLAGS="-m64 -I../include" CXXFLAGS="-m64 -I../include" LDFLAGS="-L../lib/" make -j $MAKEJ V=0
+        make install
         cd ../openh264-$OPENH264_VERSION
         make -j $MAKEJ DESTDIR=./ PREFIX=.. OS=linux ARCH=arm64 USE_ASM=No install-static CC=aarch64-linux-gnu-gcc CXX=aarch64-linux-gnu-g++
         cd ../$X264
