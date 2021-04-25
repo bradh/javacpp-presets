@@ -168,8 +168,8 @@ case $PLATFORM in
         cd ../srt-$LIBSRT_VERSION
         patch -Np1 < ../../../srt-android.patch || true
         CFLAGS="-I$INSTALL_PATH/include/ $ANDROID_FLAGS" CXXFLAGS="-I$INSTALL_PATH/include/ $ANDROID_FLAGS" LDFLAGS="-L$INSTALL_PATH/lib/ $ANDROID_FLAGS" $CMAKE --verbose -DCMAKE_TOOLCHAIN_FILE=android-arm.cmake -DCMAKE_INSTALL_PREFIX=$INSTALL_PATH $SRT_CONFIG .
-        make -j $MAKEJ V=1
-        make V=1 install
+        make -j $MAKEJ V=0
+        make install
         cd ../openh264-$OPENH264_VERSION
         sedinplace 's/stlport_shared/system/g' codec/build/android/dec/jni/Application.mk build/platform-android.mk
         sedinplace 's/12/21/g' codec/build/android/dec/jni/Application.mk build/platform-android.mk
@@ -295,7 +295,7 @@ EOF
         make install_dev
         cd ../srt-$LIBSRT_VERSION
         patch -Np1 < ../../../srt-android.patch || true
-        CFLAGS="-I$INSTALL_PATH/include/ $ANDROID_FLAGS" CXXFLAGS="-I$INSTALL_PATH/include/ $ANDROID_FLAGS" LDFLAGS="-L$INSTALL_PATH/lib/ $ANDROID_FLAGS" $CMAKE --verbose -DCMAKE_TOOLCHAIN_FILE=android-arm64.cmake -DCMAKE_INSTALL_PREFIX=$INSTALL_PATH $SRT_CONFIG .
+        CXXFLAGS="-I$INSTALL_PATH/include/ $ANDROID_FLAGS" LDFLAGS="-L$INSTALL_PATH/lib/ $ANDROID_FLAGS" $CMAKE --verbose -DCMAKE_TOOLCHAIN_FILE=android-arm64.cmake -DCMAKE_INSTALL_PREFIX=$INSTALL_PATH $SRT_CONFIG .
         make -j $MAKEJ V=1
         make install V=1
         cd ../openh264-$OPENH264_VERSION
@@ -546,7 +546,7 @@ EOF
         make install_dev
         cd ../srt-$LIBSRT_VERSION
         patch -Np1 < ../../../srt-android.patch || true
-        CFLAGS="-I$INSTALL_PATH/include/ $ANDROID_FLAGS" CXXFLAGS="-I$INSTALL_PATH/include/ $ANDROID_FLAGS" LDFLAGS="-L$INSTALL_PATH/lib/ $ANDROID_FLAGS" $CMAKE -DCMAKE_TOOLCHAIN_FILE=android-x86_64.cmake -DCMAKE_INSTALL_PREFIX=$INSTALL_PATH $SRT_CONFIG .
+        CXXFLAGS="-I$INSTALL_PATH/include/ $ANDROID_FLAGS" LDFLAGS="-L$INSTALL_PATH/lib/ $ANDROID_FLAGS" $CMAKE -DCMAKE_TOOLCHAIN_FILE=android-x86_64.cmake -DCMAKE_INSTALL_PREFIX=$INSTALL_PATH $SRT_CONFIG .
         make -j $MAKEJ V=0
         make install
         cd ../openh264-$OPENH264_VERSION
@@ -661,7 +661,8 @@ EOF
         make -s -j $MAKEJ
         make install_sw
         cd ../srt-$LIBSRT_VERSION
-        CC="gcc -m32 -I../include -L../lib" CXX="g++ -m32 -I../include -L../lib" $CMAKE -DCMAKE_INSTALL_PREFIX=$INSTALL_PATH $SRT_CONFIG .
+        # CC="gcc -m32 -I../include -L../lib" CXX="g++ -m32 -I../include -L../lib" $CMAKE -DCMAKE_INSTALL_PREFIX=$INSTALL_PATH $SRT_CONFIG .
+        CXX="g++ -m32 -I../include -L../lib" $CMAKE -DCMAKE_INSTALL_PREFIX=$INSTALL_PATH $SRT_CONFIG .
         make -j $MAKEJ V=0
         make install
         cd ../openh264-$OPENH264_VERSION
@@ -782,7 +783,7 @@ EOF
         make -s -j $MAKEJ
         make install_sw
         cd ../srt-$LIBSRT_VERSION
-        $CMAKE -DCMAKE_INSTALL_PREFIX=$INSTALL_PATH $SRT_CONFIG -DCMAKE_INCLUDE_DIRECTORIES="$INSTALL_PATH/include" -DCMAKE_LDFLAGS="$INSTALL_PATH/lib" .
+        CC="gcc -m64 -I../include -L../lib" CXX="g++ -m64 -I../include -L../lib" $CMAKE -DCMAKE_INSTALL_PREFIX=$INSTALL_PATH $SRT_CONFIG .
         make -j $MAKEJ V=0
         make install
         cd ../openh264-$OPENH264_VERSION
@@ -1079,8 +1080,8 @@ EOF
         make -s -j $MAKEJ
         make install_sw
         cd ../srt-$LIBSRT_VERSION
-        $CMAKE -DCMAKE_INSTALL_PREFIX=$INSTALL_PATH $SRT_CONFIG -DCMAKE_SYSTEM_NAME=Linux -DCMAKE_SYSTEM_VERSION=1 -DCMAKE_SYSTEM_PROCESSOR=armv8 -DCMAKE_CXX_FLAGS="$CXXFLAGS" -DCMAKE_C_FLAGS="$CFLAGS" -DCMAKE_C_COMPILER=aarch64-linux-gnu-gcc -DCMAKE_CXX_COMPILER=aarch64-linux-gnu-g++ .
-        CFLAGS="-I../include" CXXFLAGS="-I../include" LDFLAGS="-L../lib/" make -j $MAKEJ V=0
+        CFLAGS="-I../include" CXXFLAGS="-I../include" LDFLAGS="-L../lib/" $CMAKE -DCMAKE_INSTALL_PREFIX=$INSTALL_PATH $SRT_CONFIG -DCMAKE_SYSTEM_NAME=Linux -DCMAKE_SYSTEM_VERSION=1 -DCMAKE_SYSTEM_PROCESSOR=armv8 -DCMAKE_CXX_FLAGS="$CXXFLAGS" -DCMAKE_C_FLAGS="$CFLAGS" -DCMAKE_C_COMPILER=aarch64-linux-gnu-gcc -DCMAKE_CXX_COMPILER=aarch64-linux-gnu-g++ .
+        make -j $MAKEJ V=0
         make install
         cd ../openh264-$OPENH264_VERSION
         make -j $MAKEJ DESTDIR=./ PREFIX=.. OS=linux ARCH=arm64 USE_ASM=No install-static CC=aarch64-linux-gnu-gcc CXX=aarch64-linux-gnu-g++
