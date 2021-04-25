@@ -167,7 +167,7 @@ case $PLATFORM in
         make install_dev
         cd ../srt-$LIBSRT_VERSION
         patch -Np1 < ../../../srt-android.patch || true
-        $CMAKE --verbose -DCMAKE_TOOLCHAIN_FILE=android-arm.cmake -DCMAKE_INSTALL_PREFIX=$INSTALL_PATH -DCMAKE_INCLUDE_DIRECTORIES="$INSTALL_PATH/include" -DCMAKE_LDFLAGS="$INSTALL_PATH/lib" -DCMAKE_CXX_FLAGS="$CXXFLAGS" -DCMAKE_C_FLAGS="$CFLAGS" $SRT_CONFIG .
+        $CMAKE --verbose -DCMAKE_TOOLCHAIN_FILE=android-arm.cmake -DCMAKE_INSTALL_PREFIX=$INSTALL_PATH -DCMAKE_INCLUDE_DIRECTORIES="$INSTALL_PATH/include" -DCMAKE_LDFLAGS="$INSTALL_PATH/lib" -DCMAKE_C_FLAGS="$CFLAGS" $SRT_CONFIG .
         make -j $MAKEJ V=1
         make V=1 install
         cd ../openh264-$OPENH264_VERSION
