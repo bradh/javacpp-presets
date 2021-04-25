@@ -295,7 +295,7 @@ EOF
         make install_dev
         cd ../srt-$LIBSRT_VERSION
         patch -Np1 < ../../../srt-android.patch || true
-        CXXFLAGS="-I$INSTALL_PATH/include/ $ANDROID_FLAGS" LDFLAGS="-L$INSTALL_PATH/lib/ $ANDROID_FLAGS" $CMAKE --verbose -DCMAKE_TOOLCHAIN_FILE=android-arm64.cmake -DCMAKE_INSTALL_PREFIX=$INSTALL_PATH $SRT_CONFIG .
+        CFLAGS="-I$INSTALL_PATH/include/ $ANDROID_FLAGS" CXXFLAGS="-I$INSTALL_PATH/include/ $ANDROID_FLAGS" LDFLAGS="-L$INSTALL_PATH/lib/ $ANDROID_FLAGS" $CMAKE --verbose -DCMAKE_TOOLCHAIN_FILE=android-arm64.cmake -DCMAKE_INSTALL_PREFIX=$INSTALL_PATH $SRT_CONFIG .
         make -j $MAKEJ V=1
         make install V=1
         cd ../openh264-$OPENH264_VERSION
@@ -546,7 +546,7 @@ EOF
         make install_dev
         cd ../srt-$LIBSRT_VERSION
         patch -Np1 < ../../../srt-android.patch || true
-        CXXFLAGS="-I$INSTALL_PATH/include/ $ANDROID_FLAGS" LDFLAGS="-L$INSTALL_PATH/lib/ $ANDROID_FLAGS" $CMAKE -DCMAKE_TOOLCHAIN_FILE=android-x86_64.cmake -DCMAKE_INSTALL_PREFIX=$INSTALL_PATH $SRT_CONFIG .
+        CFLAGS="-I$INSTALL_PATH/include/ $ANDROID_FLAGS" CXXFLAGS="-I$INSTALL_PATH/include/ $ANDROID_FLAGS" LDFLAGS="-L$INSTALL_PATH/lib/ $ANDROID_FLAGS" $CMAKE -DCMAKE_TOOLCHAIN_FILE=android-x86_64.cmake -DCMAKE_INSTALL_PREFIX=$INSTALL_PATH $SRT_CONFIG .
         make -j $MAKEJ V=0
         make install
         cd ../openh264-$OPENH264_VERSION
@@ -661,8 +661,7 @@ EOF
         make -s -j $MAKEJ
         make install_sw
         cd ../srt-$LIBSRT_VERSION
-        # CC="gcc -m32 -I../include -L../lib" CXX="g++ -m32 -I../include -L../lib" $CMAKE -DCMAKE_INSTALL_PREFIX=$INSTALL_PATH $SRT_CONFIG .
-        CXX="g++ -m32 -I../include -L../lib" $CMAKE -DCMAKE_INSTALL_PREFIX=$INSTALL_PATH $SRT_CONFIG .
+        CC="gcc -m32 -I../include -L../lib" CXX="g++ -m32 -I../include -L../lib" $CMAKE -DCMAKE_INSTALL_PREFIX=$INSTALL_PATH $SRT_CONFIG .
         make -j $MAKEJ V=0
         make install
         cd ../openh264-$OPENH264_VERSION
